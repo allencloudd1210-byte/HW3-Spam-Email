@@ -2,3 +2,7 @@
 .venv/
 __pycache__/
 HW2/
+.DS_Store
+.venv/
+HW2/
+__pycache__/
