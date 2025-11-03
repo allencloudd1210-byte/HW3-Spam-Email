@@ -1,0 +1,14 @@
+{
+  "record_count": 5574,
+  "label_distribution": {
+    "ham": 4827,
+    "spam": 747
+  },
+  "label_ratio": {
+    "ham": 0.866,
+    "spam": 0.134
+  },
+  "avg_char_count": 48.97918909221385,
+  "avg_word_count": 8.951381413706494,
+  "avg_reading_ease": 74.23562794647708
+}

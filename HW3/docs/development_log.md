@@ -1,0 +1,42 @@
+# 開發紀錄
+
+## 2025-10-22
+- 初始化專案資料夾與開發紀錄文件結構。
+- 與用戶確認開發需求：全程實作、沿用 Packt 範例資料、需詳細記錄開發過程。
+- 下載 Packt 參考資料庫 (`reference/Hands-On-AI-Cybersecurity`) 以取得 Spam Email 範例資料與程式。
+- 建立專案目錄結構（`data/`、`src/`、`notebooks/`、`reports/`、`visualizations/` 等）。
+- 將 Chapter03 Spam 資料集 (`sms_spam_no_header.csv`) 複製至 `data/raw/` 供後續處理。
+- 初步檢視原始 CSV 結構（標籤、訊息文本）以確認資料格式。
+- 建立 `requirements.txt` 收錄資料處理、建模與視覺化所需套件。
+- 撰寫專案 README，描述整體目標、目錄結構與環境需求。
+- 建立 `src/spam_classifier` Python 套件結構，準備實作核心模組。
+- 新增 `config.py` 定義路徑常數與輸出位置。
+- 建立 `artifacts/` 目錄以保存模型與指標輸出。
+- 實作 `DataLoader`（`data_loader.py`）負責讀取與驗證 Spam CSV。
+- 開發 `TextCleaner`（`text_cleaning.py`）提供停用詞過濾與詞形還原的文字清理流程。
+- 實作 `FeatureEngineer`（`feature_engineering.py`）產生訊息長度、特殊符號、可讀性等補充特徵。
+- 建立 `preprocessing_pipeline.py`，串接資料載入、文字清理與特徵工程並輸出 Parquet 與摘要指標。
+- 建立專案虛擬環境 `.venv`，準備安裝所需套件以驗證流程。
+- 更新虛擬環境 pip 版本至最新以避免相依性問題。
+- 安裝 `requirements.txt` 中列出之套件以支援資料處理、建模與視覺化。
+- 執行前處理管線產出 `data/processed/messages.parquet` 與摘要指標 JSON。
+- 第一次運行時自動下載 NLTK stopwords 與 wordnet 資料集。
+- 新增 `model_training.py` 實作 TF-IDF + 補充特徵的多模型訓練與評估流程，含交叉驗證與成果輸出。
+- 調整 `reading_ease` 特徵下限為 0 以符合 ComplementNB 非負需求並重新輸出處理資料。
+- 執行模型訓練：Logistic Regression (F1=0.882, ROC-AUC=0.991)、Complement NB (F1=0.892, ROC-AUC=0.989)，同步計算 5 折交叉驗證 (F1 平均 0.871 與 0.911) 並產出模型檔與分類報告。
+- 新增 `visualization.py` 生成標籤分佈、訊息長度、特徵熱圖、混淆矩陣與 ROC 圖表。
+- 開發 `cli.py` 提供前處理、訓練、視覺化、指標查詢與訊息預測等指令。
+- 新增 `__main__.py` 讓套件可透過 `python -m spam_classifier` 啟動 CLI。
+- 驗證 CLI `--help` 與 `metrics` 指令運作正常。
+- 測試 CLI `predict` 指令可針對單句訊息進行分類。
+- 修正標籤分佈圖調色盤警告並重新透過 CLI `visualize` 產出圖表。
+- 建置 `streamlit_app.py` 儀表板，提供資料概覽、特徵分析、模型指標與互動預測。
+- 更新 `README.md` 補充 CLI 與 Streamlit 使用說明。
+- 撰寫 `reports/final_report.md` 總結資料流程、模型成果與後續建議。
+- 修正 `feature_engineering.py` 冒號字串逸出問題，確保模組文件字串正確。
+- 移除 `streamlit_app.py` 未使用的 `Path` 匯入以保持程式整潔。
+- 嘗試於虛擬環境安裝 `openspec` 套件，但 PyPI 無對應發佈，暫無法安裝。
+- 依 OpenSpec 格式撰寫 `docs/openspec.md` 彙整背景、需求、設計、指標與風險。
+- 調整 `streamlit_app.py` 於執行時自動將 `src/` 加入 `sys.path`，避免套件匯入錯誤。
+- 修正 Streamlit Label 分佈圖欄位對應錯誤（改用 `label`/`count`），避免 Plotly `ValueError`。
+- 將 Packt `Chapter03/datasets` 全量複製至 `data/raw/Chapter03/` 方便後續取用其他範例資料。
